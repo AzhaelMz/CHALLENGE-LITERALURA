@@ -1,6 +1,7 @@
 package com.aluracursos.literalura.main;
 
 import com.aluracursos.literalura.DataRequests.APIRequests;
+import com.aluracursos.literalura.model.BooksData;
 import com.aluracursos.literalura.service.DataConverter;
 
 import java.util.Scanner;
@@ -36,9 +37,12 @@ public class Main {
         }
     }
 
-    private void searchBookByTitle() {
+    private BooksData searchBookByTitle() {
         System.out.println("Please write the name of the book you want search");
         var userSearch = input.nextLine();
-        var json = APIRequests.getData
+        var json = APIRequests.getData(URL_BASE + "?/search=" + userSearch.replace(" ", "%20"));
+        System.out.println(json);
+        BooksData data = converter.getData(json, BooksData.class);
+        return data;
     }
 }

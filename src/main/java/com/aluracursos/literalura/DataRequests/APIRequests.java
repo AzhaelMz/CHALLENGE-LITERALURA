@@ -8,7 +8,7 @@ import java.net.http.HttpResponse;
 
 public class APIRequests {
 
-    public String getData(String url){
+    public static String getData(String url){
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
