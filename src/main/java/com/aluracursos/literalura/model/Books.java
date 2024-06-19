@@ -1,12 +1,18 @@
 package com.aluracursos.literalura.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "books")
 public class Books {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String title;
 
     private Authors authors;
-
-    private String bookCategory;
 
     private AvailableLanguages languages;
 
@@ -28,14 +34,6 @@ public class Books {
         this.authors = authors;
     }
 
-    public String getBookCategory() {
-        return bookCategory;
-    }
-
-    public void setBookCategory(String bookCategory) {
-        this.bookCategory = bookCategory;
-    }
-
     public AvailableLanguages getLanguages() {
         return languages;
     }
@@ -55,9 +53,9 @@ public class Books {
     @Override
     public String toString() {
         return "Books{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", authors=" + authors +
-                ", bookCategory='" + bookCategory + '\'' +
                 ", languages=" + languages +
                 ", downloadCount=" + downloadCount +
                 '}';

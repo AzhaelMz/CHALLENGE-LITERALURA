@@ -1,6 +1,14 @@
 package com.aluracursos.literalura.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "authors")
 public class Authors {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     private String name;
 
