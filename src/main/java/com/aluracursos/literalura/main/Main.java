@@ -2,6 +2,7 @@ package com.aluracursos.literalura.main;
 
 import com.aluracursos.literalura.DataRequests.APIRequests;
 import com.aluracursos.literalura.model.BooksData;
+import com.aluracursos.literalura.repository.BooksRepository;
 import com.aluracursos.literalura.service.DataConverter;
 
 import java.util.Scanner;
@@ -15,8 +16,12 @@ public class Main {
     private final String URL_BASE = "https://gutendex.com/books/";
 
     private DataConverter converter = new DataConverter();
-    
 
+    private BooksRepository booksRepository;
+
+    public Main(BooksRepository booksRepository) {
+        this.booksRepository = booksRepository;
+    }
 
 
     public void showingMenu(){

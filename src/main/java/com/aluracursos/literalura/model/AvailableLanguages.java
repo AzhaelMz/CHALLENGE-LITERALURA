@@ -15,4 +15,21 @@ public enum AvailableLanguages {
         this.languageCode = languageCode;
         this.languageName = languageName;
     }
+
+    public static AvailableLanguages getNameByCode(String code){
+        for (AvailableLanguages languages: AvailableLanguages.values()){
+            if (languages.languageCode.equalsIgnoreCase(code)){
+                return languages;
+            }
+        }
+        throw new IllegalArgumentException("Language not found" + code);
+    }
+    public static String getSpanishName(String enumName){
+        try{
+            AvailableLanguages languages = AvailableLanguages.valueOf(enumName.toUpperCase());
+            return languages.languageName;
+        }catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Language not found:" + enumName);
+        }
+    } ;
 }

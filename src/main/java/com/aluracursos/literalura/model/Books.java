@@ -2,21 +2,48 @@ package com.aluracursos.literalura.model;
 
 import jakarta.persistence.*;
 
+import java.util.stream.Collectors;
+
 @Entity
 @Table(name = "books")
 public class Books {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
+
+    @Column(unique = true)
     private String title;
 
+    @ManyToOne
     private Authors authors;
 
+    @Enumerated (EnumType.STRING)
     private AvailableLanguages languages;
 
     private int downloadCount;
+
+    public Books(){}
+
+    public Books(BooksData books, Authors authors){
+        this.title = books.title();
+
+        this.languages = books.languages().stream()
+                .map(AvailableLanguages::getNameByCode)
+                .collect(Collectors.toList())
+                .get(0);
+        this.downloadCount = books.downloadCount();
+        this.authors = authors;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -53,7 +80,7 @@ public class Books {
     @Override
     public String toString() {
         return "Books{" +
-                "id=" + id +
+                "id=" + Id +
                 ", title='" + title + '\'' +
                 ", authors=" + authors +
                 ", languages=" + languages +
