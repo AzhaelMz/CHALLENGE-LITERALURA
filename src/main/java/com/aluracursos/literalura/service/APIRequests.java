@@ -1,4 +1,4 @@
-package com.aluracursos.literalura.DataRequests;
+package com.aluracursos.literalura.service;
 
 import java.io.IOException;
 import java.net.URI;

@@ -1,49 +1,43 @@
 package com.aluracursos.literalura.model;
 
-import jakarta.persistence.*;
+import java.util.List;
 
-import java.util.stream.Collectors;
-
-@Entity
-@Table(name = "books")
+//@Entity
+//@Table(name = "books")
 public class Books {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long Id;
 
-
-    @Column(unique = true)
+//    @Column(unique = true)
     private String title;
 
-    @ManyToOne
+//    @ManyToOne
     private Authors authors;
 
-    @Enumerated (EnumType.STRING)
-    private AvailableLanguages languages;
+    //    @Enumerated (EnumType.STRING)
+    private List<String> languages;
 
-    private int downloadCount;
+    private Double downloadCount;
 
-    public Books(){}
+//    public Books(){}
 
-    public Books(BooksData books, Authors authors){
-        this.title = books.title();
+//    public Books(BooksData booksData) {
+//        this.title = booksData.title();
+//        this.authors = (Authors) booksData.authors();
+//        this.languages = booksData.languages();
+//        this.downloadCount = booksData.downloadCount();
+//
+//    }
 
-        this.languages = books.languages().stream()
-                .map(AvailableLanguages::getNameByCode)
-                .collect(Collectors.toList())
-                .get(0);
-        this.downloadCount = books.downloadCount();
-        this.authors = authors;
-    }
-
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }
+//    public Long getId() {
+//        return Id;
+//    }
+//
+//    public void setId(Long id) {
+//        Id = id;
+//    }
 
     public String getTitle() {
         return title;
@@ -61,27 +55,30 @@ public class Books {
         this.authors = authors;
     }
 
-    public AvailableLanguages getLanguages() {
-        return languages;
-    }
-
-    public void setLanguages(AvailableLanguages languages) {
+    public void setLanguages(List<String> languages) {
         this.languages = languages;
     }
 
-    public int getDownloadCount() {
+//    public AvailableLanguages getLanguages() {
+//        return languages;
+//    }
+//
+//    public void setLanguages(AvailableLanguages languages) {
+//        this.languages = languages;
+//    }
+
+    public Double getDownloadCount() {
         return downloadCount;
     }
 
     public void setDownloadCount(int downloadCount) {
-        this.downloadCount = downloadCount;
+        this.downloadCount = (double) downloadCount;
     }
 
     @Override
     public String toString() {
         return "Books{" +
-                "id=" + Id +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", authors=" + authors +
                 ", languages=" + languages +
                 ", downloadCount=" + downloadCount +
