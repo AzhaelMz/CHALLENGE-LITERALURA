@@ -2,7 +2,6 @@ package com.aluracursos.literalura.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
@@ -16,6 +15,7 @@ public class Books {
     @Column(unique = true)
     private String title;
 
+    @ManyToOne
     private Authors authors;
 
     @Enumerated(EnumType.STRING)
@@ -32,6 +32,14 @@ public class Books {
                 .get(0);
         this.downloadCount = booksData.downloadCount();
 
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     public String getTitle() {
@@ -66,12 +74,6 @@ public class Books {
         this.downloadCount = downloadCount;
     }
 
-    public Long getId() {
-        return Id;
-    }
 
-    public void setId(Long id) {
-        Id = id;
-    }
 
 }

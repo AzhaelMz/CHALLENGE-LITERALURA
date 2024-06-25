@@ -1,7 +1,8 @@
-package com.aluracursos.literalura.main;
+package com.aluracursos.literalura;
 
 //import com.aluracursos.literalura.repository.AuthorsRepository;
 //import com.aluracursos.literalura.repository.BooksRepository;
+import com.aluracursos.literalura.main.Main;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
