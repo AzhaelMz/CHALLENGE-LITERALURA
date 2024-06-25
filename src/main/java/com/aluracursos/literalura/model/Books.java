@@ -1,16 +1,24 @@
 package com.aluracursos.literalura.model;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@Entity
-//@Table(name = "books")
+@Entity
+@Table(name = "books")
 public class Books {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
+    @Column(unique = true)
     private String title;
 
     private Authors authors;
 
+    @Enumerated(EnumType.STRING)
     private FindByLanguages languages;
 
     private Double downloadCount;
@@ -22,6 +30,7 @@ public class Books {
                 .map(FindByLanguages::getNameByCode)
                 .collect(Collectors.toList())
                 .get(0);
+        this.downloadCount = booksData.downloadCount();
 
     }
 
@@ -57,12 +66,12 @@ public class Books {
         this.downloadCount = downloadCount;
     }
 
-    @Override
-    public String toString() {
-        return
-                "title='" + title + '\'' +
-                ", authors=" + authors +
-                ", languages=" + languages +
-                ", downloadCount=" + downloadCount;
+    public Long getId() {
+        return Id;
     }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
 }
