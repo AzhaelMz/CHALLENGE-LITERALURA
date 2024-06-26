@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "books")
-public class Books {
+@Table(name = "Books")
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,21 +16,22 @@ public class Books {
     private String title;
 
     @ManyToOne
-    private Authors authors;
+    @JoinColumn(name = "authors_name")
+    private Author author;
 
     @Enumerated(EnumType.STRING)
     private FindByLanguages languages;
 
     private Double downloadCount;
 
-    public Books(BooksData booksData, Authors authors){ //se traen los datos del record BooksData
-        this.title = booksData.title();
-        this.authors = authors;
-        this.languages = booksData.languages().stream()
+    public Book(BookData bookData, Author author){ //se traen los datos del record BooksData
+        this.title = bookData.title();
+        this.author = author;
+        this.languages = bookData.languages().stream()
                 .map(FindByLanguages::getNameByCode)
                 .collect(Collectors.toList())
                 .get(0);
-        this.downloadCount = booksData.downloadCount();
+        this.downloadCount = bookData.downloadCount();
 
     }
 
@@ -50,12 +51,12 @@ public class Books {
         this.title = title;
     }
 
-    public Authors getAuthors() {
-        return authors;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthors(Authors authors) {
-        this.authors = authors;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public FindByLanguages getLanguages() {

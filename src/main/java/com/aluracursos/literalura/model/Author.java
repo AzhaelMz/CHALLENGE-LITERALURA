@@ -6,19 +6,27 @@ import java.util.List;
 
 @Entity
 @Table(name = "Authors")
-public class Authors {
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
+
     private String name;
 
     private Integer birthYear;
 
     private Integer deathYear;
 
-//    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<Books> books;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Book>books;
 
+    public Author(AuthorData author){
+        this.name = author.name();
+        this.birthYear = author.birthYear();
+        this.deathYear = author.deathYear();
+    }
 
     public String getName() {
         return name;
@@ -44,7 +52,14 @@ public class Authors {
         this.deathYear = deathYear;
     }
 
-//    public List<Books> getBooks() {
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+    //    public List<Books> getBooks() {
 //        return books;
 //    }
 //

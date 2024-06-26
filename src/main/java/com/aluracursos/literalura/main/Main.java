@@ -1,11 +1,10 @@
 package com.aluracursos.literalura.main;
 
-import com.aluracursos.literalura.model.AuthorsData;
-import com.aluracursos.literalura.model.Books;
+import com.aluracursos.literalura.model.AuthorData;
 import com.aluracursos.literalura.model.ResultsData;
 import com.aluracursos.literalura.service.APIRequests;
 //import com.aluracursos.literalura.model.Books;
-import com.aluracursos.literalura.model.BooksData;
+import com.aluracursos.literalura.model.BookData;
 //import com.aluracursos.literalura.repository.BooksRepository;
 import com.aluracursos.literalura.service.DataConverter;
 
@@ -24,9 +23,9 @@ public class Main {
 
     private DataConverter converter = new DataConverter();
 
-    private List<BooksData> booksData = new ArrayList<>();
+    private List<BookData> bookData = new ArrayList<>();
 
-    private List<AuthorsData> authorsData = new ArrayList<>();
+    private List<AuthorData> authorData = new ArrayList<>();
 
 
  //   private BooksRepository booksRepository;
@@ -36,7 +35,7 @@ public class Main {
 //    }
 
 
-    public BooksData showingMenu() {
+    public BookData showingMenu() {
         System.out.println("Welcome to literalura, please choose an option to start");
 
         var option = -1;
@@ -65,13 +64,13 @@ public class Main {
         return null;
     }
 
-    private BooksData getBooksDataFromApi() {
+    private BookData getBooksDataFromApi() {
         System.out.println("Please enter the name of the book you want to search");
         var userInput = input.nextLine();
         var json = APIRequests.getData(URL_BASE + "/?search=" + userInput.replace(" ", "%20"));
         var userSearch = converter.getData(json, ResultsData.class);
         System.out.println(json);
-        Optional<BooksData> bookSearched = userSearch.books().stream()
+        Optional<BookData> bookSearched = userSearch.books().stream()
                 .filter(b -> b.title().toUpperCase().contains(userInput.toUpperCase()))
                 .findFirst();
         if (bookSearched.isPresent()) {
@@ -91,25 +90,25 @@ public class Main {
 
     //1st option
     private void searchBookByTitle(){
-        BooksData data = getBooksDataFromApi();
-        booksData.add(data);
+        BookData data = getBooksDataFromApi();
+        bookData.add(data);
     }
     //2nd option
     private void listBooksFounded(){
-        if(booksData.isEmpty()){
+        if(bookData.isEmpty()){
             System.out.println("List empty");
         }else{
             System.out.println("List of books");
-            booksData.forEach(System.out::println);
+            bookData.forEach(System.out::println);
         }
     }
     //3rd option
     private void listAuthorsOfTheBooksFound(){
-        if (booksData.isEmpty()){
+        if (bookData.isEmpty()){
             System.out.println("¡Ops!, not authors found. Please search a book first ;)");
         }else{
             System.out.println("Authors founded:");
-            booksData.forEach(b -> b.authors().forEach(System.out::println));
+            bookData.forEach(b -> b.authors().forEach(System.out::println));
         }
     }
 
