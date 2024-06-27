@@ -1,16 +1,16 @@
-//package com.aluracursos.literalura.repository;
-//
-////import com.aluracursos.literalura.model.AvailableLanguages;
-//import com.aluracursos.literalura.model.Books;
-//import org.springframework.data.jpa.repository.JpaRepository;
-//
-//import java.util.List;
-//
-//public interface BooksRepository extends JpaRepository<Books, Long> {
-//
-//    List<Books> searchByTitleContainsIgnoreCase(String bookName);
-//
-//    //List<Books> searchByLanguages (AvailableLanguages languages);
-//
-//    Books searchByTitle(String title);
-//}
+package com.aluracursos.literalura.repository;
+
+//import com.aluracursos.literalura.model.AvailableLanguages;
+import com.aluracursos.literalura.model.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface BookRepository extends JpaRepository<Book, Long> {
+
+    List<Book> searchByTitleContainsIgnoreCase(String bookName);
+
+    //List<Book> searchByLanguages (AvailableLanguages languages);
+
+    Book searchByTitle(String title);
+}

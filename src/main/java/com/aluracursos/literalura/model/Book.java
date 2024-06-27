@@ -16,7 +16,7 @@ public class Book {
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "authors_name")
+    @JoinColumn(name = "author_id")
     private Author author;
 
     @Enumerated(EnumType.STRING)
@@ -24,16 +24,19 @@ public class Book {
 
     private Double downloadCount;
 
-    public Book(BookData bookData, Author author){ //se traen los datos del record BooksData
-        this.title = bookData.title();
+    public Book(){}
+
+    public Book(BookData book, Author author){ //se traen los datos del record BooksData
+        this.title = book.title();
         this.author = author;
-        this.languages = bookData.languages().stream()
+        this.languages = book.languages().stream()
                 .map(FindByLanguages::getNameByCode)
                 .collect(Collectors.toList())
                 .get(0);
-        this.downloadCount = bookData.downloadCount();
+        this.downloadCount = book.downloadCount();
 
     }
+
 
     public Long getId() {
         return Id;

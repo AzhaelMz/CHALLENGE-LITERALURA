@@ -12,7 +12,6 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-
     private String name;
 
     private Integer birthYear;
@@ -22,10 +21,10 @@ public class Author {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Book>books;
 
-    public Author(AuthorData author){
-        this.name = author.name();
-        this.birthYear = author.birthYear();
-        this.deathYear = author.deathYear();
+    public Author(AuthorData authorData){
+        this.name = authorData.name();
+        this.birthYear = authorData.birthYear();
+        this.deathYear = authorData.deathYear();
     }
 
     public String getName() {
@@ -59,13 +58,14 @@ public class Author {
     public void setId(Long id) {
         Id = id;
     }
-    //    public List<Books> getBooks() {
-//        return books;
-//    }
-//
-//    public void setBooks(List<Books> books) {
-//        this.books = books;
-//    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
 }
 
 
