@@ -5,7 +5,7 @@ import com.aluracursos.literalura.repository.AuthorRepository;
 import com.aluracursos.literalura.repository.BookRepository;
 import com.aluracursos.literalura.service.APIRequests;
 import com.aluracursos.literalura.service.DataConverter;
-
+import com.aluracursos.literalura.model.Book
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +24,9 @@ public class Main {
     private List<BookData> bookData = new ArrayList<>();
 
     private List<AuthorData> authorData = new ArrayList<>();
+    
+    private Optional<Book> bookSearched;
+
 
     private BookRepository bookRepository;
 
@@ -35,9 +38,6 @@ public class Main {
 
     }
 
-//    public Main(BooksRepository booksRepository) {
-//        this.booksRepository = booksRepository;
-//    }
 
 
     public BookData showingMenu() {
@@ -57,17 +57,16 @@ public class Main {
                     searchBookByTitle();
                     break;
                 case 2:
-//                    listBooksFounded();
-//                    break;
-//                case 3:
-//                    listAuthorsOfTheBooksFound();
-//                    break;
+//                    listBookFound();
+                  break;
                 default:
                     System.out.println("Invalid option");
             }
         }
         return null;
     }
+
+
 
 
     private BookData getBooksDataFromApi() {
@@ -78,84 +77,42 @@ public class Main {
         System.out.println(json);
         var data = converter.getData(json, ResultsData.class);
         Optional<BookData> bookSearched = data.books().stream()
-                .filter(b -> b.title().toUpperCase().contains(userTitle.toUpperCase()))
+                .filter(l -> l.title().toUpperCase().contains(userTitle.toUpperCase()))
                 .findFirst();
-            return bookData;
+        if (bookSearched.isPresent()){
+            System.out.println("Book found");
+            System.out.println(bookSearched);
+            bookRepository.save();
         }
+
+
     }
-    //Option 1
+    //1st Option
     private void searchBookByTitle(){
-        BookData bookData = getBooksDataFromApi();
-        if(bookData!= null){
-            System.out.println(bookData);
+        System.out.println("Please, write the name of the book");
+        var bookName = input.nextLine();
+        bookSearched = bookRepository.searchByTitleContainsIgnoreCase(bookName);
+        
+        if (bookSearched.isPresent()){
+            System.out.println("The book searched is: " + bookSearched.get());
+        }else{
+            System.out.println("Book is not in the data base, lets see in the web");
+
+            }
+
+    }
+
+    private void saveApiDataToDataBase (ResultsData apiData){
+        ResultsData resultsData = getBooksDataFromApi();
+
+        Optional<BookData> bookData = resultsData.books().stream()
+                .filter(b -> b.title().toUpperCase().contains(toString()))
+                .findFirst();
+        if (bookData.isPresent(){
+            System.out.println("Book found in the web");
+            System.out.println(bookData.get());
+
         }
     }
+
 }
-
-//
-
-//
-//           // Crea y guarda el libro
-//           Book book = new Book(bookData, author);
-//           bookRepository.save(book);
-//       } else {
-//           System.out.println("No authors found for this book");
-//       }
-//
-//            return bookData;
-//        } else {
-//            System.out.println("Sorry book not found");
-//            return null;
-//        }
-//    }
-
-//    private void searchBookByTitle() {
-//        BookData bookData = getBooksDataFromApi();
-//        if (bookData != null) {
-//            // Obtén el autor del libro
-//            if (!bookData.author().isEmpty()) {
-//                AuthorData authorData = bookData.author().get(0); // Asumimos que el libro tiene al menos un autor
-//                Author author = new Author(authorData);
-//                // Guarda el autor en la base de datos si no existe
-//                    authorRepository.save(author);
-//                }
-//                // Crea y guarda el libro
-//                Book book = new Book(bookData);
-//                bookRepository.save(book);
-//            } else {
-//                System.out.println("No authors found for this book");
-//            }
-//        }
-//    }
-//
-//    private void listBooksFounded() {
-//        List<Book> books = bookRepository.findAll();
-//        if (books.isEmpty()) {
-//            System.out.println("No books found.");
-//        } else {
-//            for (Book book : books) {
-//                System.out.println("Title: " + book.getTitle() + ", Author: " + book.getAuthor().getName());
-//            }
-//        }
-//    }
-//
-//    private void listAuthorsOfTheBooksFound() {
-//        List<Author> authors = authorRepository.findAll();
-//        if (authors.isEmpty()) {
-//            System.out.println("No authors found.");
-//        } else {
-//            for (Author author : authors) {
-//                System.out.println("Author: " + author.getName());
-//            }
-//        }
-//    }
-//
-//    public static void main(String[] args) {
-//        // Aquí debes inicializar tus repositorios, tal vez usando Spring Boot o una instancia manual
-//        BookRepository bookRepository = // Inicializa tu repositorio aquí
-//                AuthorRepository authorRepository = // Inicializa tu repositorio aquí
-//
-//                Main main = new Main(bookRepository, authorRepository);
-//        main.showingMenu();
-//}
-
