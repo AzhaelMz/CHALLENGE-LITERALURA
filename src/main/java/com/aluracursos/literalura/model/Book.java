@@ -24,7 +24,7 @@ public class Book {
 
     private Double downloadCount;
 
-    public Book(){}
+    public Book(BookData bookData, AuthorData authorData){}
 
     public Book(BookData book, Author author){ //se traen los datos del record BooksData
         this.title = book.title();
