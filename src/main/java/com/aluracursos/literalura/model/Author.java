@@ -19,12 +19,13 @@ public class Author {
     private Integer deathYear;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Book>books;
+    private List<Book> books;
 
-    public Author(AuthorData authorData){
-        this.name = authorData.name();
-        this.birthYear = authorData.birthYear();
-        this.deathYear = authorData.deathYear();
+    public Author(){}
+    public Author(AuthorData author){
+        this.name = author.name();
+        this.birthYear = author.birthYear();
+        this.deathYear = author.deathYear();
     }
 
     public String getName() {
@@ -49,14 +50,6 @@ public class Author {
 
     public void setDeathYear(Integer deathYear) {
         this.deathYear = deathYear;
-    }
-
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
     }
 
     public List<Book> getBooks() {

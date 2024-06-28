@@ -5,7 +5,7 @@ import com.aluracursos.literalura.repository.AuthorRepository;
 import com.aluracursos.literalura.repository.BookRepository;
 import com.aluracursos.literalura.service.APIRequests;
 import com.aluracursos.literalura.service.DataConverter;
-import com.aluracursos.literalura.model.Book
+import com.aluracursos.literalura.model.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,8 +24,8 @@ public class Main {
     private List<BookData> bookData = new ArrayList<>();
 
     private List<AuthorData> authorData = new ArrayList<>();
-    
-    private Optional<Book> bookSearched;
+
+    private List<Book> bookSearched;
 
 
     private BookRepository bookRepository;
@@ -37,7 +37,6 @@ public class Main {
         this.authorRepository = authorRepository;
 
     }
-
 
 
     public BookData showingMenu() {
@@ -57,8 +56,7 @@ public class Main {
                     searchBookByTitle();
                     break;
                 case 2:
-//                    listBookFound();
-                  break;
+                    break;
                 default:
                     System.out.println("Invalid option");
             }
@@ -67,52 +65,56 @@ public class Main {
     }
 
 
+    private ResultsData getBooksDataFromApi() {
+        ResultsData data = null;
+        try {
+            System.out.println("Please enter the name of the book to search on the web");
+            var userTitle = input.nextLine();
+            var json = APIRequests.getData(URL_BASE + "/?search=" + userTitle.replace(" ", "%20"));
+            System.out.println(json);
+            ResultsData resultsData = converter.getData(json, ResultsData.class);
+            return resultsData;
 
-
-    private BookData getBooksDataFromApi() {
-
-        System.out.println("Please enter the name of the book you want to search");
-        var userTitle = input.nextLine();
-        var json = APIRequests.getData(URL_BASE + "/?search=" + userTitle.replace(" ", "%20"));
-        System.out.println(json);
-        var data = converter.getData(json, ResultsData.class);
-        Optional<BookData> bookSearched = data.books().stream()
-                .filter(l -> l.title().toUpperCase().contains(userTitle.toUpperCase()))
-                .findFirst();
-        if (bookSearched.isPresent()){
-            System.out.println("Book found");
-            System.out.println(bookSearched);
-            bookRepository.save();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-
     }
-    //1st Option
-    private void searchBookByTitle(){
-        System.out.println("Please, write the name of the book");
-        var bookName = input.nextLine();
-        bookSearched = bookRepository.searchByTitleContainsIgnoreCase(bookName);
-        
-        if (bookSearched.isPresent()){
-            System.out.println("The book searched is: " + bookSearched.get());
-        }else{
-            System.out.println("Book is not in the data base, lets see in the web");
 
+    private void searchBookByTitle() {
+        System.out.println("Write the name of the book you want to search");
+        var userBook = input.nextLine();
+        List<Book> bookSearched = bookRepository.searchByTitleContainsIgnoreCase(userBook);
+
+        if(bookSearched.isEmpty()){
+            System.out.println("Book not found in the data base");
+            ResultsData resultsData = getBooksDataFromApi();
+            Optional<BookData> bookDataOptional = resultsData.book().stream()
+                    .filter(b -> b.title().toUpperCase().contains(userBook.toUpperCase()))
+                    .findFirst();
+            if (bookDataOptional.isPresent()) {
+                BookData bookData = bookDataOptional.get();
+                List<AuthorData> authorsData = bookData.authors();
+                if (!authorsData.isEmpty()) {
+                    AuthorData authorData = authorsData.get(0); // Tomar el primer autor de la lista
+                    Author author = authorRepository.searchByName(authorData.name());
+                    if (author == null) {
+                        author = new Author(authorData);
+                        authorRepository.save(author);
+                    }
+                    Book book = new Book(bookData, author);
+                    bookRepository.save(book);
+                    System.out.println("Book found and added to the database.");
+                    System.out.println("The book is" + book);
+                } else {
+                    System.out.println("No authors found for the book in the API.");
+                }
+            } else {
+                System.out.println("No books found in the API.");
             }
-
-    }
-
-    private void saveApiDataToDataBase (ResultsData apiData){
-        ResultsData resultsData = getBooksDataFromApi();
-
-        Optional<BookData> bookData = resultsData.books().stream()
-                .filter(b -> b.title().toUpperCase().contains(toString()))
-                .findFirst();
-        if (bookData.isPresent(){
-            System.out.println("Book found in the web");
-            System.out.println(bookData.get());
-
+        } else {
+            System.out.println("Books found in the local database:");
+            bookSearched.forEach(book -> System.out.println(book.getTitle()));
         }
     }
-
 }

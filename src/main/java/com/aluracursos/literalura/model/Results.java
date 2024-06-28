@@ -3,14 +3,14 @@ package com.aluracursos.literalura.model;
 import java.util.List;
 
 public class Results {
-    private List<Book> books;
+    private List<Book> results;
 
     public List<Book> getResults() {
-        return books;
+        return results;
     }
 
     public void setResults(List<Book> results) {
-        this.books = books;
+        this.results = results;
     }
 
 }

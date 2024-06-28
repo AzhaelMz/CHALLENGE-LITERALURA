@@ -19,32 +19,28 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
+    @Column(name = "author_name")
+    private String authorName;
+
     @Enumerated(EnumType.STRING)
     private FindByLanguages languages;
 
     private Double downloadCount;
 
-    public Book(BookData bookData, AuthorData authorData){}
+    public Book() {
+    }
 
-    public Book(BookData book, Author author){ //se traen los datos del record BooksData
+    public Book(BookData book, Author author) { //se traen los datos del record BooksData
         this.title = book.title();
-        this.author = author;
         this.languages = book.languages().stream()
                 .map(FindByLanguages::getNameByCode)
                 .collect(Collectors.toList())
                 .get(0);
         this.downloadCount = book.downloadCount();
+        this.author = author;
 
     }
 
-
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -78,6 +74,21 @@ public class Book {
         this.downloadCount = downloadCount;
     }
 
+    public String getAuthorName() {
+        return authorName;
+    }
 
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author=" + (author != null ? author.getName() + " (born " + author.getBirthYear() + ", died " + author.getDeathYear() + ")" : "No author") +
+                ", languages=" + languages +
+                ", downloadCount=" + downloadCount +
+                '}';
+    }
 }
