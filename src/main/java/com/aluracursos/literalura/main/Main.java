@@ -1,16 +1,15 @@
 package com.aluracursos.literalura.main;
 
 import com.aluracursos.literalura.AuthorService;
+import com.aluracursos.literalura.exceptions.InvalidOptionsException;
 import com.aluracursos.literalura.model.*;
 import com.aluracursos.literalura.repository.AuthorRepository;
 import com.aluracursos.literalura.repository.BookRepository;
 import com.aluracursos.literalura.service.APIRequests;
 import com.aluracursos.literalura.service.DataConverter;
 import com.aluracursos.literalura.model.Book;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+
+import java.util.*;
 
 public class Main {
 
@@ -35,6 +34,10 @@ public class Main {
 
     private AuthorRepository authorRepository;
 
+    private boolean theAppIsRunning = true;
+
+    private InvalidOptionsException invalidOptionsException;
+
     public Main(BookRepository bookRepository, AuthorRepository authorRepository, AuthorService authorService) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
@@ -43,48 +46,61 @@ public class Main {
     }
 
 
-    public BookData showingMenu() {
-        System.out.println("Welcome to literalura, please choose an option to start");
+    public void mainApp() {
 
-        var option = -1;
-        while (option != 0) {
-            var menu = """
-                    1.Search book by title.
-                    2.List books founded
-                    3.List authors
-                    4.List authors by year
-                    5.List books by language""";
-            System.out.println(menu);
-            option = input.nextInt();
-            input.nextLine();
-            switch (option) {
-                case 1:
-                    searchBookByTitle();
-                    break;
-                case 2:
-                    listBooksFound();
-                    break;
-                case 3:
-                    listAuthors();
-                    break;
-                case 4:
-                    listAuthorsAliveByYear();
-                    break;
-                case 5:
-                    listBooksByUserLanguage();
-                    break;
-                case 0:
-                    System.out.println("Thanks for use literalura exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid option");
+        while (theAppIsRunning) {
+
+            try {
+                showingMenu();
+                System.out.println("Welcome to literalura, please choose an option to start");
+                int selectedOption = input.nextInt();
+                input.nextLine();
+                switch (selectedOption) {
+                    case 1:
+                        searchBookByTitle();
+                        break;
+                    case 2:
+                        listBooksFound();
+                        break;
+                    case 3:
+                        listAuthors();
+                        break;
+                    case 4:
+                        listAuthorsAliveByYear();
+                        break;
+                    case 5:
+                        listBooksByUserLanguage();
+                        break;
+                    case 0:
+                        theAppIsRunning = false;
+                        System.out.println("Thanks for use literalura exiting...");
+                        System.exit(0);
+                        break;
+                    default:
+                        throw new InvalidOptionsException("Invalid option: " + selectedOption);
+                }
+
+            } catch (InputMismatchException e) {
+                input.nextLine();
+                System.out.println("Error: invalid input. Try again");
+            } catch (InvalidOptionsException e) {
+                System.out.println("Error: " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Unexpected error: " + e.getMessage());
             }
         }
-        return null;
     }
-
-
-
+    public void showingMenu() {
+        var menu = """
+                        1.Search book by title.
+                        2.List books founded
+                        3.List authors
+                        4.List authors by year
+                        5.List books by language
+                        
+                        0.EXIT""";
+        System.out.println(menu);
+    }
 
     private ResultsData getBooksDataFromApi() {
         ResultsData data = null;
@@ -101,6 +117,7 @@ public class Main {
         }
 
     }
+
     //1st option this option get the data from database in case is empty it will ask again to the user the name to find on the API.
     private void searchBookByTitle() {
         System.out.println("Please write the name (or id if you want to get a random book ;)) of the book you want to search");
@@ -140,16 +157,19 @@ public class Main {
 
 
     }
+
     //2nd option will list the books from the database.
     private void listBooksFound(){
         var books = bookRepository.findAll();
         System.out.println(books);
     }
+
     //3rd option will list the authors from the books are in the database.
     private void listAuthors (){
         List<Author> authors = authorRepository.findAll();
         System.out.println(authors);
     }
+
     //4th option ask to user which year wants to get authors live in that year.
     private void listAuthorsAliveByYear() {
         System.out.println("Pleas enter a year to see the authors alive in that year ");
@@ -183,3 +203,5 @@ public class Main {
         }
     }
 }
+
+
