@@ -52,7 +52,8 @@ public class Main {
                     1.Search book by title.
                     2.List books founded
                     3.List authors
-                    4.List authors by year""";
+                    4.List authors by year
+                    5.List books by language""";
             System.out.println(menu);
             option = input.nextInt();
             input.nextLine();
@@ -68,6 +69,12 @@ public class Main {
                     break;
                 case 4:
                     listAuthorsAliveByYear();
+                    break;
+                case 5:
+                    listBooksByUserLanguage();
+                    break;
+                case 0:
+                    System.out.println("Thanks for use literalura exiting...");
                     break;
                 default:
                     System.out.println("Invalid option");
@@ -94,7 +101,7 @@ public class Main {
         }
 
     }
-
+    //1st option this option get the data from database in case is empty it will ask again to the user the name to find on the API.
     private void searchBookByTitle() {
         System.out.println("Please write the name (or id if you want to get a random book ;)) of the book you want to search");
         var userBook = input.nextLine();
@@ -133,17 +140,17 @@ public class Main {
 
 
     }
-
+    //2nd option will list the books from the database.
     private void listBooksFound(){
         var books = bookRepository.findAll();
         System.out.println(books);
     }
-
+    //3rd option will list the authors from the books are in the database.
     private void listAuthors (){
         List<Author> authors = authorRepository.findAll();
         System.out.println(authors);
     }
-
+    //4th option ask to user which year wants to get authors live in that year.
     private void listAuthorsAliveByYear() {
         System.out.println("Pleas enter a year to see the authors alive in that year ");
         int year = input.nextInt();
@@ -155,6 +162,24 @@ public class Main {
         }else{
             System.out.println("Listed author from the year " + year);
             authors.forEach(System.out::println);
+        }
+    }
+
+    private void listBooksByUserLanguage() {
+        System.out.println("Please choose a language code from the following list:");
+        System.out.println(FindByLanguages.getAvailableLanguages());
+
+        String code = input.nextLine();
+        try {
+            FindByLanguages languages = FindByLanguages.getNameByCode(code);
+            List<Book> books = bookRepository.searchByLanguages(languages);
+            if (books.isEmpty()) {
+                System.out.println("No books found for the language: " + languages.name());
+            }else {
+                books.forEach(b -> System.out.println(b.getTitle()));
+            }
+            } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

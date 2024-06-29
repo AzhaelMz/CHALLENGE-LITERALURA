@@ -84,11 +84,9 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author=" + (author != null ? author.getName() + " (born " + author.getBirthYear() + ", died " + author.getDeathYear() + ")" : "No author") +
-                ", languages=" + languages +
-                ", downloadCount=" + downloadCount +
-                '}';
+        return "Title ='" + title + '\'' +
+                ", Author =" + (author != null ? author.getName() + " (born " + author.getBirthYear() + ", died " + author.getDeathYear() + ")" : "No author") +
+                ", Languages =" + languages +
+                ", DownloadCount =" + downloadCount ;
     }
 }

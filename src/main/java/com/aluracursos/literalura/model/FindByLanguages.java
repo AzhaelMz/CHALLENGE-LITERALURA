@@ -25,4 +25,11 @@ public enum FindByLanguages {
         }
         throw new IllegalArgumentException("Books not founded for this languages: "+ code);
     }
+    public static String getAvailableLanguages() {
+        StringBuilder languages = new StringBuilder();
+        for (FindByLanguages language : FindByLanguages.values()){
+            languages.append(language.codeOfLanguage).append("-").append(language.nameOfLanguage).append("\n");
+        }
+        return languages.toString();
+    }
 }
