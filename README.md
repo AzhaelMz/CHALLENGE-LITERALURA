@@ -40,7 +40,7 @@ In this program you can...
 
 
 *Some data comes from the database except the 1st option "Search a book by title" this option can get data from the API also. Consider search a book first to get all data.
-## ⚙️ Wich technologies i used?
+## 🧰 Wich technologies i used?
 To make this possible i used:
 
 - Java 17 (JDK languge).
@@ -53,3 +53,51 @@ To make this possible i used:
 ## 🤓 Developer
 
 Roberto Azhael Manzon Tamayo
+## ⚙️ App Running
+When you run the app you will see the following menu:
+
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/4a779e3b-26a1-4605-95f1-01cd8997462f)
+
+There you can choose the option you want to execute.
+
+- For the 1st if you write the name or id od the book you will the following result:
+
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/f315fb98-2b96-4f56-8e0b-4a795bb8393a)
+
+in case the data is not in the database you wil see the following:
+
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/8a91fdde-e234-4380-8cc8-f7f2cf9a673a)
+
+when you write again the same id you will get the following result:
+
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/197f732d-c721-4ec5-9019-cb7966bc5788)
+
+- For the 2nd option you will get the list of the books searched previously:
+
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/7367940c-e03b-4b87-8b60-57edc61395d6)
+
+- For the 3rd option you will get the following result:
+
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/e29e0915-80b0-4022-8ee3-d69ff919ded6)
+
+- For the 4st option you will get:
+
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/560da0cb-185e-45b6-88d7-5ebf2b01f877)
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/d58f91eb-83c9-4e69-b095-b228289da114)
+
+- For the last (5th option) you will get the list of the books of the language you write (you can use code or string):
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/4e9f037b-67aa-4d67-9216-21a910c81e86)
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/187e98c9-9188-4b05-ad7f-40778a30e035)
+
+
+
+
+
+
+
+
+
+
+
+
+
