@@ -17,6 +17,8 @@ public class LiteraluraApplication implements CommandLineRunner {
 	private BookRepository bookRepository;
 	@Autowired
 	private AuthorRepository authorRepository;
+	@Autowired
+	private AuthorService authorService;
 
 
 	public static void main(String[] args) {
@@ -25,7 +27,7 @@ public class LiteraluraApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Main main = new Main(bookRepository, authorRepository);
+		Main main = new Main(bookRepository, authorRepository, authorService);
 		main.showingMenu();
 	}
 }
