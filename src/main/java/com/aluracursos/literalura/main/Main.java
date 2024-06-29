@@ -56,6 +56,10 @@ public class Main {
                     searchBookByTitle();
                     break;
                 case 2:
+                    listBooksFound();
+                    break;
+                case 3:
+                    listAuthors();
                     break;
                 default:
                     System.out.println("Invalid option");
@@ -116,5 +120,17 @@ public class Main {
             System.out.println("Books found in the local database:");
             bookSearched.forEach(book -> System.out.println(book.getTitle()));
         }
+
+
+    }
+
+    private void listBooksFound(){
+        var books = bookRepository.findAll();
+        System.out.println(books);
+    }
+
+    private void listAuthors (){
+        List<Author> authors = authorRepository.findAll();
+        System.out.println(authors);
     }
 }
