@@ -90,10 +90,21 @@ when you write again the same id you will get the following result:
 ![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/4e9f037b-67aa-4d67-9216-21a910c81e86)
 ![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/187e98c9-9188-4b05-ad7f-40778a30e035)
 
+Also if you want to verfy the data you can use the Querys from PostgreSQL. You will see like this:
+
+- For books:
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/7e0b8bf9-7563-4994-94a6-5cf3614ef512)
+
+-For authors *:
+
+![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/d2bcb62e-cfce-411d-a839-222424f74104) 
+
+*Some books doesn't have authors and tha is why you probably see "null" in some results.
+
 ## 🫡 Conclusion 
-I'll will add more features later like pretty format for the results, sub menus and more...
-if you have ideas or improvments, let me know by my email contact: r.azhaelmanzon@gmail.com and
-you can ask a pull request to edit. :)
+I'll will add more features in the future because the programming learn is a constantly update. 
+The future improvments i'll add i'll be pretty format for the results, sub menus and more...
+if you have ideas or improvments, you can ask a pull request for edit. :)
 
 
 
