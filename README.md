@@ -93,6 +93,7 @@ when you write again the same id you will get the following result:
 Also if you want to verfy the data you can use the Querys from PostgreSQL. You will see like this:
 
 - For books:
+
 ![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/7e0b8bf9-7563-4994-94a6-5cf3614ef512)
 
 
