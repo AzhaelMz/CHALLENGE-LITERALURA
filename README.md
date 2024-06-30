@@ -96,7 +96,7 @@ Also if you want to verfy the data you can use the Querys from PostgreSQL. You w
 ![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/7e0b8bf9-7563-4994-94a6-5cf3614ef512)
 
 
--For authors *:
+- For authors *:
 
 ![image](https://github.com/AzhaelMz/CHALLENGE-LITERALURA/assets/158383050/d2bcb62e-cfce-411d-a839-222424f74104) 
 
